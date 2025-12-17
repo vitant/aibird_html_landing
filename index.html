@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birds AI - AI Automation Agency | Наймите AI-сотрудников</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Manrope', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 100%);
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism effect */
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glass-hover:hover {
+            background: rgba(15, 23, 42, 0.85);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+        }
+        
+        /* Neon glow effects */
+        .neon-glow {
+            background: linear-gradient(135deg, #00ff88 0%, #10ff00 100%);
+        }
+        
+        .glow-text {
+            background: linear-gradient(135deg, #00ff88 0%, #10ff00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .accent-purple {
+            color: #d946ef;
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Hero workflow animation */
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            position: relative;
+        }
+        
+        .workflow-node {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0, 255, 136, 0.2);
+            border: 2px solid #00ff88;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .workflow-node::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #00ff88;
+            opacity: 0.2;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.2;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+        
+        /* Card hover effects */
+        .price-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.15);
+        }
+        
+        /* Sticky header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .mobile-menu.active + .desktop-nav {
+                display: flex;
+            }
+        }
+        
+        /* Accordion */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-content.active {
+            max-height: 500px;
+        }
+        
+        .accordion-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-icon.active {
+            transform: rotate(180deg);
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #00ff88 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Button styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff88 0%, #10ff00 100%);
+            color: #0f172a;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #00ff88;
+            color: #00ff88;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="glass border-b border-white/10">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="text-2xl font-bold gradient-text">
+                Birds AI
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="desktop-nav hidden md:flex gap-8 items-center">
+                <a href="#products" class="hover:text-green-400 transition">Продукты</a>
+                <a href="#tech" class="hover:text-green-400 transition">Технологии</a>
+                <a href="#pricing" class="hover:text-green-400 transition">Цены</a>
+                <a href="#faq" class="hover:text-green-400 transition">FAQ</a>
+            </div>
+            
+            <!-- CTA Button -->
+            <button class="btn-primary px-6 py-2 rounded-lg font-semibold hidden md:block">
+                Заказать внедрение
+            </button>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden mobile-toggle" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-menu md:hidden border-t border-white/10 bg-black/50">
+            <div class="flex flex-col gap-4 p-4">
+                <a href="#products" class="hover:text-green-400 transition">Продукты</a>
+                <a href="#tech" class="hover:text-green-400 transition">Технологии</a>
+                <a href="#pricing" class="hover:text-green-400 transition">Цены</a>
+                <a href="#faq" class="hover:text-green-400 transition">FAQ</a>
+                <button class="btn-primary px-6 py-2 rounded-lg font-semibold w-full">
+                    Заказать внедрение
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+            <!-- Hero Content -->
+            <div class="text-center mb-16">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text">Наймите AI-сотрудников,</span><br>
+                    которые не спят, не болеют<br>
+                    и не просят отпуск.
+                </h1>
+                
+                <p class="text-lg sm:text-xl text-gray-400 mb-8 leading-relaxed max-w-3xl mx-auto">
+                    Автономные агенты на базе <span class="text-green-400">n8n</span> и <span class="text-green-400">GPT-4</span>. Интеграция в вашу CRM за 3 дня. Полная автоматизация продаж, поддержки и лидгена.
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                    <button class="btn-primary px-8 py-4 rounded-lg font-bold text-lg">
+                        Рассчитать стоимость
+                    </button>
+                    <button class="btn-secondary px-8 py-4 rounded-lg font-bold text-lg">
+                        Смотреть кейсы
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Workflow Visualization -->
+            <div class="glass rounded-2xl p-8 sm:p-12">
+                <div class="flex flex-col sm:flex-row justify-around items-center gap-8">
+                    <div class="text-center">
+                        <div class="workflow-node mb-4 mx-auto">📱</div>
+                        <p class="text-sm text-gray-400">CRM</p>
+                    </div>
+                    <div class="hidden sm:block text-2xl text-green-400">→</div>
+                    <div class="text-center">
+                        <div class="workflow-node mb-4 mx-auto">🤖</div>
+                        <p class="text-sm text-gray-400">AI Agent</p>
+                    </div>
+                    <div class="hidden sm:block text-2xl text-green-400">→</div>
+                    <div class="text-center">
+                        <div class="workflow-node mb-4 mx-auto">✅</div>
+                        <p class="text-sm text-gray-400">Результат</p>
+                    </div>
+                </div>
+                <p class="text-center text-gray-500 text-sm mt-8">
+                    Интеграция с вашей системой за 3 дня. Self-Hosted решение — ваши данные под вашим контролем.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem vs Solution -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Problem -->
+                <div class="glass glass-hover rounded-2xl p-8 border-2 border-red-500/30">
+                    <h3 class="text-2xl font-bold mb-4 text-red-400">❌ Человеческий фактор</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400">•</span>
+                            <span>Забытые звонки и сообщения</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400">•</span>
+                            <span>Выгорание сотрудников</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400">•</span>
+                            <span>Долгие ответы и опозданием</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400">•</span>
+                            <span>Ошибки в CRM и потери данных</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Solution -->
+                <div class="glass glass-hover rounded-2xl p-8 border-2 border-green-500/30">
+                    <h3 class="text-2xl font-bold mb-4 text-green-400">✅ Системный подход</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-400">•</span>
+                            <span>Мгновенная реакция 24/7</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-400">•</span>
+                            <span>Идеальное следование скриптам</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-400">•</span>
+                            <span>Полная история в карточке клиента</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-400">•</span>
+                            <span>Безошибочная обработка данных</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 gradient-text">Наши продукты</h2>
+            <p class="text-center text-gray-400 mb-16 text-lg">
+                Выберите нужный вам AI-агент для автоматизации бизнеса
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1: AI Sales Manager -->
+                <div class="price-card glass glass-hover rounded-2xl p-8 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2 text-green-400">🤝 AI-Менеджер</h3>
+                    <p class="text-gray-400 mb-4 text-sm">по продажам</p>
+                    
+                    <div class="mb-6">
+                        <p class="text-4xl font-bold mb-2">65 000 ₽</p>
+                        <p class="text-sm text-gray-500">(разово)</p>
+                    </div>
+                    
+                    <div class="border-t border-white/10 pt-6 mb-6 flex-grow">
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-400 mt-1">✓</span>
+                                <span>Выявление потребностей</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-400 mt-1">✓</span>
+                                <span>Отработка возражений</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-400 mt-1">✓</span>
+                                <span>Ведение по воронке продаж</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-400 mt-1">✓</span>
+                                <span>Квалификация лида</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn-primary w-full py-3 rounded-lg font-bold">
+                        Подробнее
+                    </button>
+                </div>
+                
+                <!-- Card 2: AI Support -->
+                <div class="price-card glass glass-hover rounded-2xl p-8 flex flex-col border-2 border-purple-500/50">
+                    <h3 class="text-2xl font-bold mb-2 accent-purple">💬 AI-Support</h3>
+                    <p class="text-gray-400 mb-4 text-sm">техподдержка</p>
+                    
+                    <div class="mb-6">
+                        <p class="text-4xl font-bold mb-2">45 000 ₽</p>
+                        <p class="text-sm text-gray-500">(разово)</p>
+                    </div>
+                    
+                    <div class="border-t border-white/10 pt-6 mb-6 flex-grow">
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-start gap-3">
+                                <span class="text-purple-400 mt-1">✓</span>
+                                <span>Ответы на вопросы 24/7</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-purple-400 mt-1">✓</span>
+                                <span>Работа с базой знаний</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-purple-400 mt-1">✓</span>
+                                <span>Интеграция с Telegram/WhatsApp</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-purple-400 mt-1">✓</span>
+                                <span>Эскалация на человека</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <button class="bg-purple-600 hover:bg-purple-700 w-full py-3 rounded-lg font-bold transition">
+                        Подробнее
+                    </button>
+                </div>
+                
+                <!-- Card 3: AI Lead Gen -->
+                <div class="price-card glass glass-hover rounded-2xl p-8 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2 text-blue-400">🎯 AI-Лидген</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Холодный поиск</p>
+                    
+                    <div class="mb-6">
+                        <p class="text-4xl font-bold mb-2">45 000 ₽</p>
+                        <p class="text-sm text-gray-500">(разово)</p>
+                    </div>
+                    
+                    <div class="border-t border-white/10 pt-6 mb-6 flex-grow">
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-start gap-3">
+                                <span class="text-blue-400 mt-1">✓</span>
+                                <span>Холодный поиск и скоринг</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-blue-400 mt-1">✓</span>
+                                <span>Рассылка офферов</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-blue-400 mt-1">✓</span>
+                                <span>Назначение встреч</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-blue-400 mt-1">✓</span>
+                                <span>Интеграция с календарем</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn-secondary w-full py-3 rounded-lg font-bold">
+                        Подробнее
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Subscription Note -->
+            <div class="mt-12 text-center glass rounded-xl p-6 max-w-2xl mx-auto">
+                <p class="text-gray-300">
+                    <span class="font-bold text-green-400">Ежемесячная подписка</span> 
+                    <span class="text-gray-500">(сервер + токены + поддержка):</span>
+                </p>
+                <p class="text-2xl font-bold text-green-400 mt-2">
+                    от 6 000 до 60 000 ₽
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section id="tech" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 gradient-text">На чем мы строим системы</h2>
+            <p class="text-center text-gray-400 mb-12 text-lg">
+                Проверенные технологии и надежная интеграция
+            </p>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Tech items -->
+                <div class="glass glass-hover rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-3">🔄</div>
+                    <p class="font-semibold">n8n</p>
+                    <p class="text-xs text-gray-500 mt-2">Workflow Automation</p>
+                </div>
+                
+                <div class="glass glass-hover rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-3">🧠</div>
+                    <p class="font-semibold">GPT-4</p>
+                    <p class="text-xs text-gray-500 mt-2">OpenAI Model</p>
+                </div>
+                
+                <div class="glass glass-hover rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-3">🐍</div>
+                    <p class="font-semibold">Python</p>
+                    <p class="text-xs text-gray-500 mt-2">Custom Scripts</p>
+                </div>
+                
+                <div class="glass glass-hover rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-3">📊</div>
+                    <p class="font-semibold">Bitrix24</p>
+                    <p class="text-xs text-gray-500 mt-2">CRM Integration</p>
+                </div>
+                
+                <div class="glass glass-hover rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-3">💼</div>
+                    <p class="font-semibold">AmoCRM</p>
+                    <p class="text-xs text-gray-500 mt-2">Sales CRM</p>
+                </div>
+                
+                <div class="glass glass-hover rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-3">💬</div>
+                    <p class="font-semibold">Telegram</p>
+                    <p class="text-xs text-gray-500 mt-2">Messaging API</p>
+                </div>
+                
+                <div class="glass glass-hover rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-3">📱</div>
+                    <p class="font-semibold">WhatsApp</p>
+                    <p class="text-xs text-gray-500 mt-2">Messaging API</p>
+                </div>
+                
+                <div class="glass glass-hover rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-3">🔐</div>
+                    <p class="font-semibold">Self-Hosted</p>
+                    <p class="text-xs text-gray-500 mt-2">Data Security</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 glass rounded-xl p-8 border-l-4 border-green-400">
+                <p class="text-gray-300">
+                    <span class="text-green-400 font-bold">Мы используем Self-Hosted решения n8n,</span>
+                    <span class="text-gray-400"> чтобы ваши данные оставались под вашим контролем. Полная прозрачность и безопасность гарантированы.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Прозрачное ценообразование</h2>
+            
+            <div class="glass rounded-2xl p-8 sm:p-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-green-400">Разовая настройка</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li>✓ Разработка AI-агента</li>
+                            <li>✓ Интеграция с CRM</li>
+                            <li>✓ Настройка сценариев</li>
+                            <li>✓ Тестирование</li>
+                        </ul>
+                        <p class="text-3xl font-bold mt-6 text-green-400">45-65k ₽</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-purple-400">Ежемесячная подписка</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li>✓ Выделенный сервер</li>
+                            <li>✓ Токены нейросетей</li>
+                            <li>✓ Мониторинг 24/7</li>
+                            <li>✓ Техническая поддержка</li>
+                        </ul>
+                        <p class="text-3xl font-bold mt-6 text-purple-400">6-60k ₽</p>
+                    </div>
+                </div>
+                
+                <button class="btn-primary w-full py-4 rounded-lg font-bold text-lg">
+                    Получить расчет стоимости
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Часто задаваемые вопросы</h2>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="glass glass-hover rounded-xl overflow-hidden">
+                    <button class="accordion-btn w-full p-6 text-left" onclick="toggleAccordion(this)">
+                        <span class="text-lg font-bold">Чем это лучше обычного чат-бота?</span>
+                        <svg class="accordion-icon w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content border-t border-white/10">
+                        <p class="p-6 text-gray-300">
+                            Наши агенты понимают контекст, могут принимать решения и выполнять действия в CRM (создать сделку, выставить счет), а не просто отвечать по шаблону. Они обучены на вашей базе знаний и могут адаптироваться к специфике вашего бизнеса.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="glass glass-hover rounded-xl overflow-hidden">
+                    <button class="accordion-btn w-full p-6 text-left" onclick="toggleAccordion(this)">
+                        <span class="text-lg font-bold">Что входит в ежемесячную оплату?</span>
+                        <svg class="accordion-icon w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content border-t border-white/10">
+                        <p class="p-6 text-gray-300">
+                            Ежемесячная оплата включает аренду выделенного сервера, оплату токенов нейросетей (GPT-4), мониторинг работоспособности 24/7 и полную техническую поддержку. Все обновления и исправления включены в подписку.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="glass glass-hover rounded-xl overflow-hidden">
+                    <button class="accordion-btn w-full p-6 text-left" onclick="toggleAccordion(this)">
+                        <span class="text-lg font-bold">Безопасно ли это?</span>
+                        <svg class="accordion-icon w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content border-t border-white/10">
+                        <p class="p-6 text-gray-300">
+                            Мы подписываем NDA и гарантируем полную конфиденциальность. Данные обрабатываются на изолированных серверах, все доступы надежно шифруются, и мы соответствуем всем требованиям безопасности и GDPR.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="glass glass-hover rounded-xl overflow-hidden">
+                    <button class="accordion-btn w-full p-6 text-left" onclick="toggleAccordion(this)">
+                        <span class="text-lg font-bold">Как долго длится процесс внедрения?</span>
+                        <svg class="accordion-icon w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content border-t border-white/10">
+                        <p class="p-6 text-gray-300">
+                            Типичный процесс внедрения занимает 3-5 дней: первый день - анализ вашей системы, второй-третий - разработка и интеграция, четвертый-пятый - тестирование и запуск. Сложные проекты могут требовать больше времени.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="glass glass-hover rounded-xl overflow-hidden">
+                    <button class="accordion-btn w-full p-6 text-left" onclick="toggleAccordion(this)">
+                        <span class="text-lg font-bold">Может ли AI помочь с моей конкретной задачей?</span>
+                        <svg class="accordion-icon w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content border-t border-white/10">
+                        <p class="p-6 text-gray-300">
+                            Абсолютно! Мы работаем с любыми бизнес-процессами. Предложите нам вашу задачу - мы проанализируем возможности и предложим оптимальное решение на базе n8n и AI. Консультация полностью бесплатна.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-16 px-4 sm:px-6 lg:px-8 mt-20">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Branding -->
+                <div>
+                    <h3 class="text-2xl font-bold gradient-text mb-4">Birds AI</h3>
+                    <p class="text-gray-400 text-sm">
+                        AI-агенты для автоматизации вашего бизнеса. Работающие 24/7 без выходных и отпусков.
+                    </p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-bold mb-4">Навигация</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#products" class="hover:text-green-400 transition">Продукты</a></li>
+                        <li><a href="#tech" class="hover:text-green-400 transition">Технологии</a></li>
+                        <li><a href="#pricing" class="hover:text-green-400 transition">Цены</a></li>
+                        <li><a href="#faq" class="hover:text-green-400 transition">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contacts -->
+                <div>
+                    <h4 class="font-bold mb-4">Контакты</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li>
+                            <a href="mailto:dudorov_dm@mail.ru" class="hover:text-green-400 transition">
+                                📧 dudorov_dm@mail.ru
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://t.me/birds_ai" class="hover:text-green-400 transition" target="_blank">
+                                💬 Telegram
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom -->
+            <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
+                <p>© 2025 Birds AI. All rights reserved.</p>
+                <p class="mt-4 sm:mt-0">Developed by <span class="text-green-400">Denis Dudorov</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menuBtn = document.querySelector('.mobile-toggle');
+            const menu = document.querySelector('.mobile-menu');
+            menu.classList.toggle('active');
+        }
+        
+        // Accordion Toggle
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.accordion-icon');
+            
+            // Close all other accordions
+            document.querySelectorAll('.accordion-content').forEach(item => {
+                if (item !== content) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            document.querySelectorAll('.accordion-icon').forEach(item => {
+                if (item !== icon) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle current
+            content.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    // Close mobile menu if open
+                    document.querySelector('.mobile-menu').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
