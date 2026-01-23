@@ -1,32 +1,157 @@
 # AI Bird Website
 
-Static landing pages with a lightweight Node server that serves files and
-accepts lead submissions for Telegram notifications.
+Статический лендинг + лёгкий Node.js‑сервер для приёма заявок и отправки уведомлений в Telegram.
+Проект рассчитан на быстрый запуск без сборки: HTML/CSS/JS + один серверный файл.
 
-## Quick Start
+## Содержание
 
-1. Create `.env` and set `TELEGRAM_BOT_TOKEN`.
-2. Optionally set `TELEGRAM_RECIPIENTS` (comma-separated chat IDs or @channel usernames).
-2. Run `node server.js`.
-3. Open `http://localhost:8000`.
+- [Кратко о проекте](#кратко-о-проекте)
+- [Возможности](#возможности)
+- [Требования](#требования)
+- [Быстрый старт](#быстрый-старт)
+- [Переменные окружения](#переменные-окружения)
+- [Настройка Telegram‑бота](#настройка-telegramбота)
+- [Поток заявок](#поток-заявок)
+- [Метаданные (TXT)](#метаданные-txt)
+- [Структура проекта](#структура-проекта)
+- [Запуск в проде](#запуск-в-проде)
+- [Безопасность и персональные данные](#безопасность-и-персональные-данные)
+- [Траблшутинг](#траблшутинг)
+- [Лицензия](#лицензия)
 
-## Lead Flow
+## Кратко о проекте
 
-- Forms send JSON to `POST /api/lead`.
-- The server broadcasts the lead to all subscribers stored in
-  `data/subscribers.json`.
-- Users must message the bot first (e.g. send `/start`) to be added.
-- `TELEGRAM_RECIPIENTS` allows a fixed list of recipients without waiting for subscriptions.
+AI Bird Website — это лендинг‑сайт с тёмным футуристичным дизайном и формой заявки.
+При отправке формы сервер шлёт в Telegram короткое сообщение о заявке + отдельный TXT‑файл
+с полными метаданными.
 
-## Files
+## Возможности
 
-- `index.html` - main landing page
-- `cases.html`, `about.html`, `blog.html` - secondary pages
-- `privacy.html`, `offer.html`, `404.html`
-- `styles.css`, `script.js`
-- `server.js` - static server + Telegram broadcast
+- Статические страницы: `index.html`, `cases.html`, `about.html`, `blog.html`.
+- Адаптивная верстка (мобайл + планшеты).
+- Форма заявки с подтверждением отправки.
+- Уведомления в Telegram (бот + подписка через `/start`).
+- Метаданные визита сохраняются в TXT‑файл и уходят в Telegram.
+- Встроенный `/health` endpoint для проверок.
 
-## Notes
+## Требования
 
-- Requires Node 18+ for global `fetch`.
-- Use `PORT=8080 node server.js` to change the port.
+- Node.js 18+ (для встроенного `fetch`).
+- Telegram‑бот (токен от BotFather).
+
+## Быстрый старт
+
+1. Откройте `.env` и укажите `TELEGRAM_BOT_TOKEN`.
+2. (Опционально) задайте `TELEGRAM_RECIPIENTS`.
+3. Запустите сервер:
+
+```
+node server.js
+```
+
+4. Откройте сайт:
+
+```
+http://localhost:8000
+```
+
+## Переменные окружения
+
+- `TELEGRAM_BOT_TOKEN` — токен бота (обязательно).
+- `TELEGRAM_RECIPIENTS` — список получателей (опционально):
+  - chat_id через запятую или пробел: `12345678,98765432`
+  - можно добавлять `@channelname`.
+- `PORT` — порт сервера (по умолчанию 8000).
+
+Примечание: `.env` в этом репозитории **коммитится**, так как репозиторий закрытый.
+Если репозиторий станет публичным — обязательно вынести секреты и убрать `.env` из Git.
+
+## Настройка Telegram‑бота
+
+1. Создайте бота через BotFather и получите токен.
+2. Запустите сервер.
+3. Напишите боту `/start` — он добавит ваш `chat_id` в `data/subscribers.json`.
+4. Бот ответит и пришлёт ваш `chat_id`. Его можно использовать в `TELEGRAM_RECIPIENTS`.
+
+## Поток заявок
+
+- Формы с атрибутом `data-lead` отправляют JSON в `POST /api/lead`.
+- Сервер:
+  1) отправляет короткое сообщение о заявке в Telegram,
+  2) прикладывает TXT‑файл со всеми метаданными.
+
+Endpoint:
+- `POST /api/lead` — приём заявки.
+- `GET /health` — простая проверка статуса сервера.
+
+## Метаданные (TXT)
+
+В TXT‑файл уходит расширенный набор данных, включая:
+
+- Referrer / Landing + время (МСК)
+- IP, User Agent
+- ОС и версия (из UA)
+- Браузер и версия (из UA)
+- Язык и набор языков
+- Time zone и UTC offset
+- Размеры экрана/вьюпорта + devicePixelRatio
+- Ориентация экрана, color‑gamut, HDR
+- Параметры устройства: RAM, CPU, touch
+- Тип ввода и hover/pointer
+- Поддержка WebGL (vendor/renderer)
+- Косвенный детект AdBlock
+- Статистика сессии/посещений
+
+Формат TXT можно менять в `server.js` в функции `formatMetaText()`.
+
+## Структура проекта
+
+- `index.html` — основной лендинг
+- `cases.html`, `about.html`, `blog.html` — дополнительные страницы
+- `privacy.html` — политика конфиденциальности
+- `consent.html` — согласие на обработку данных
+- `offer.html` — оферта
+- `styles.css` — стили
+- `script.js` — фронтенд‑логика (формы, метаданные, анимации)
+- `server.js` — Node.js сервер + Telegram
+- `data/subscribers.json` — подписчики Telegram (игнорируется Git)
+- `data/visitors.json` — статистика посещений (игнорируется Git)
+
+## Запуск в проде
+
+Минимальный вариант:
+
+```
+PORT=8000 node server.js
+```
+
+Рекомендовано:
+
+- запускать через `pm2` или systemd
+- проксировать через Nginx/Caddy
+- ограничить доступ к `/data` на уровне файловой системы
+
+## Безопасность и персональные данные
+
+- Сайт собирает персональные данные через форму заявки.
+- Политика и согласие лежат в `privacy.html` и `consent.html`.
+- Метаданные отправляются в Telegram (TXT).
+- Файлы в `data/` исключены из Git, чтобы не хранить заявки в репозитории.
+
+## Траблшутинг
+
+- **Не приходят сообщения в Telegram**:
+  - проверьте `TELEGRAM_BOT_TOKEN`;
+  - убедитесь, что бот получил `/start`;
+  - если используете `TELEGRAM_RECIPIENTS`, укажите числовой `chat_id`.
+
+- **Форма не отправляется**:
+  - проверьте консоль браузера;
+  - проверьте, что сервер запущен и порт доступен.
+
+- **Порт занят**:
+  - используйте `PORT=8080 node server.js`.
+
+## Лицензия
+
+Private / All rights reserved.
