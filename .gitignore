@@ -1,0 +1,7 @@
+.DS_Store
+.env
+*.log
+*.swp
+data/subscribers.json
+data/visitors.json
+node_modules/

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ru" data-ga-id="" data-ym-id="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Bird — AI-автоматизация для бизнеса на базе n8n + GPT</title>
+    <meta name="description"
+      content="AI Bird — платформа AI-автоматизации для бизнеса на базе n8n + GPT. Автоматизирует продажи, поддержку и онбординг, интегрируется с CRM и может работать в self-hosted режиме."
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      document.documentElement.classList.add('js');
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "AI Bird",
+        "url": "https://aibird.ru",
+        "description": "Платформа AI-автоматизации для бизнеса на базе n8n + GPT."
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "AI-автоматизация для бизнеса",
+        "serviceType": "AI-автоматизация на базе n8n + GPT",
+        "provider": {
+          "@type": "Organization",
+          "name": "AI Bird"
+        },
+        "areaServed": "RU",
+        "description": "Автоматизация продаж, поддержки и онбординга через AI-ассистентов с интеграциями в CRM и self-hosted режимом."
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Чем AI Bird отличается от обычного чат-бота на конструкторе?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AI Bird понимает естественный язык, работает на LLM, обучается на ваших данных и легко расширяется через n8n. Обычные боты ограничены жёсткими сценариями."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Где хранятся данные и кто имеет к ним доступ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Доступен self-hosted режим: все переписки, базы и CRM остаются на серверах клиента. Доступ имеет только ваша команда."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Что нужно от клиента для старта?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Нужны доступы к каналам общения и CRM, материалы и база знаний для обучения ассистента, а также описание текущих процессов."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Сколько времени занимает запуск пилота и полноценного решения?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Пилот обычно запускается за 2–4 недели в зависимости от объёма сценариев и интеграций. Полное внедрение планируется поэтапно."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Можно ли начать с маленького пилота без серьёзных вложений?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Да, пилот ограничивается ключевыми сценариями и каналами, чтобы быстро проверить эффект и масштабироваться дальше."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Что, если у нас уже есть CRM и какие-то боты?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Мы подключаем AI Bird поверх текущей инфраструктуры, используем существующие данные и постепенно заменяем или дополняем старые сценарии."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Нужен ли свой сервер для self-hosted и какой?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Да, для self-hosted нужен сервер. Конфигурация зависит от объёма диалогов и каналов, мы помогаем подобрать оптимальный вариант."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Как считается стоимость?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Модель включает разовое внедрение и дальнейшую поддержку по подписке. Стоимость зависит от числа каналов, сценариев и нагрузки."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-bar">
+        <a class="logo" href="index.html" aria-label="AI Bird">
+          <span class="logo-mark" aria-hidden="true">
+              <img src="logo.png" alt="" width="26" height="26" />
+            </span>
+          <span class="logo-text">AI Bird</span>
+        </a>
+        <nav class="main-nav" data-nav id="primary-nav">
+          <a href="#problem">Проблема</a>
+          <a href="#solution">Решение</a>
+          <a href="#cases">Кейсы</a>
+          <a href="#process">Как работаем</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Контакты</a>
+          <a href="cases.html">Все кейсы</a>
+          <a href="about.html">О проекте</a>
+          <a href="blog.html">Материалы</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="btn btn-ghost btn-sm" href="#contact">Аудит</a>
+          <div class="lang-switch" aria-label="Переключение языка">
+            <span class="lang active">RU</span>
+            <a class="lang" href="en/index.html">EN</a>
+          </div>
+          <button
+            class="nav-toggle"
+            type="button"
+            data-nav-toggle
+            aria-expanded="false"
+            aria-controls="primary-nav"
+          >
+            Меню
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="content">
+      <section class="hero section" id="top">
+        <div class="container hero-grid">
+          <div class="hero-copy" data-reveal style="--delay: 0.05s">
+            <p class="eyebrow">AI-автоматизация для B2B</p>
+            <h1>
+              AI Bird — AI-автоматизация продаж и поддержки через ассистентов на базе n8n + GPT.
+            </h1>
+            <p class="lead">
+              Продаем и внедряем AI-автоматизацию: self-hosted режим, обучение на данных вашей
+              компании и интеграции с CRM, сайтом, Telegram и другими каналами — без магии, только
+              системная автоматизация.
+            </p>
+            <div class="cta-group">
+              <a class="btn btn-primary" href="#contact">Получить бесплатный аудит</a>
+              <a
+                class="btn btn-ghost"
+                href="https://t.me/dudorovdenis"
+                data-telegram
+                target="_blank"
+                rel="noopener"
+              >
+                Написать в Telegram
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--alt" id="benefits">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Выгоды</p>
+              <h2>Выгоды, которые видны в процессах и цифрах</h2>
+            </div>
+            <p class="lead">
+              Схема движения лида, технологический фундамент и измеримый эффект для команды.
+            </p>
+          </div>
+          <div class="benefits-layout">
+            <article class="card benefit-flow" data-reveal style="--delay: 0.05s">
+              <div class="benefit-flow-head">
+                <h3>Схема работы AI Bird</h3>
+              </div>
+              <div class="flow">
+                <div class="flow-node">Сайт / Чат</div>
+                <div class="flow-node">AI Bird</div>
+                <div class="flow-node">CRM</div>
+                <div class="flow-node">Команда</div>
+              </div>
+              <p class="benefit-subtitle">Технологический фундамент</p>
+              <div class="benefit-tech">
+                <div class="stat-card">Self-hosted: ваши данные на вашем сервере</div>
+                <div class="stat-card">n8n-сценарии для быстрых изменений</div>
+                <div class="stat-card">LLM понимает контекст и свободный текст</div>
+                <div class="stat-card">Интеграции с Telegram и сайтами</div>
+                <div class="stat-card">Контроль доступа и роли для команд</div>
+                <div class="stat-card">Логи и аналитика диалогов для улучшений</div>
+              </div>
+            </article>
+            <article class="card benefit-list" data-reveal style="--delay: 0.1s">
+              <h3>Что получает бизнес</h3>
+              <ul class="checklist">
+                <li>24/7 ответы без усталости и человеческого фактора</li>
+                <li>Интеграции с CRM, сайтом и мессенджерами</li>
+                <li>Self-hosted: данные остаются у клиента</li>
+                <li>Снижение нагрузки на поддержку и продажи</li>
+                <li>Прозрачная аналитика по лидам и эффективности команды</li>
+                <li>Быстрые изменения сценариев без остановки процессов</li>
+              </ul>
+            </article>
+          </div>
+          <article class="card benefit-metrics-wide" data-reveal style="--delay: 0.15s">
+            <div class="benefit-metrics-head">
+              <h3>Эффект в цифрах</h3>
+              <p class="lead">Ощутимый результат уже в пилотной фазе.</p>
+            </div>
+            <div class="metrics metrics--wide">
+              <div class="metric">
+                <div class="metric-value">до 70%</div>
+                <div class="metric-label">экономии на операционных расходах</div>
+              </div>
+              <div class="metric">
+                <div class="metric-value">&lt; 1 мин</div>
+                <div class="metric-label">среднее время ответа клиенту</div>
+              </div>
+              <div class="metric">
+                <div class="metric-value">+15–30%</div>
+                <div class="metric-label">рост конверсии в лид</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="problem">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Проблема</p>
+              <h2>Почему лиды теряются, а команда перегружена</h2>
+            </div>
+            <p class="lead">
+              Бизнес растёт, а коммуникации разрознены: клиенты пишут в разное время,
+              каналы не связаны, а поддержка не успевает.
+            </p>
+          </div>
+          <ul class="pain-list" data-reveal>
+            <li>Клиенты пишут ночью — вы отвечаете утром, но они уже ушли.</li>
+            <li>Менеджеры тонут в однотипных вопросах и теряют фокус.</li>
+            <li>CRM, сайт и мессенджеры не связаны друг с другом.</li>
+            <li>Оплачивать работу целой смены операторов дорого и нестабильно.</li>
+            <li>Данные клиентов раскиданы по чатам, Excel и CRM, и ничего нельзя нормально посчитать.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section--alt" id="solution">
+        <div class="container two-col">
+          <div data-reveal style="--delay: 0.05s">
+            <p class="eyebrow">Решение</p>
+            <h2>Что делает AI Bird</h2>
+            <ul class="action-list">
+              <li>
+                <strong>Отвечает клиентам</strong>
+                В мессенджерах и на сайте, понимая свободный текст.
+              </li>
+              <li>
+                <strong>Квалифицирует и прогревает лидов</strong>
+                Задаёт уточняющие вопросы, сегментирует, сохраняет контекст.
+              </li>
+              <li>
+                <strong>Записывает и переносит визиты</strong>
+                Бронирование, напоминания, переносы без участия администратора.
+              </li>
+              <li>
+                <strong>Создаёт задачи в CRM</strong>
+                Сделки, контакты и задачи появляются автоматически.
+              </li>
+              <li>
+                <strong>Собирает и структурирует данные</strong>
+                История диалогов и аналитика готовы для менеджеров.
+              </li>
+            </ul>
+          </div>
+          <div data-reveal style="--delay: 0.1s">
+            <div class="card path-card">
+              <span class="badge">Путь клиента</span>
+              <h3>От первого сообщения до сделки</h3>
+              <ol class="path-steps">
+                <li class="path-step">
+                  <span>1</span>
+                  Клиент пишет в чат или оставляет заявку.
+                </li>
+                <li class="path-step">
+                  <span>2</span>
+                  AI-ассистент отвечает, задаёт вопросы, собирает данные.
+                </li>
+                <li class="path-step">
+                  <span>3</span>
+                  Данные отправляются в CRM: создаётся контакт, сделка, задача.
+                </li>
+                <li class="path-step">
+                  <span>4</span>
+                  Менеджер подключается там, где нужен человек (закрытие сделки).
+                </li>
+                <li class="path-step">
+                  <span>5</span>
+                  Вся статистика и диалоги доступны для анализа.
+                </li>
+                <li class="path-step">
+                  <span>6</span>
+                  Команда получает отчёты и выявляет узкие места процесса.
+                </li>
+                <li class="path-step">
+                  <span>7</span>
+                  Сценарии улучшаются, а ассистент становится точнее на новых данных.
+                </li>
+              </ol>
+              <p class="lead">
+                Это не магия, а управляемые сценарии в n8n и прозрачные правила обработки.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="comparison">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Сравнение</p>
+              <h2>Обычный бот vs AI Bird</h2>
+            </div>
+            <p class="lead">Показываем разницу в подходе и возможностях.</p>
+          </div>
+          <div class="compare-grid" data-reveal>
+            <div class="compare-card">
+              <h3>Обычный бот</h3>
+              <ul>
+                <li>Работает по жёсткому сценарию, кнопки и заранее прописанные ветки.</li>
+                <li>Живёт на сторонней платформе.</li>
+                <li>Сложный и дорогой пересбор под новые задачи.</li>
+                <li>Не понимает свободный текст и ломается при нестандартных вопросах.</li>
+              </ul>
+            </div>
+            <div class="compare-card">
+              <h3>AI Bird</h3>
+              <ul>
+                <li>Понимает естественный язык и контекст.</li>
+                <li>Может быть self-hosted, данные остаются у клиента.</li>
+                <li>Обучается на документах, базе знаний, прошлых диалогах.</li>
+                <li>Легко дорабатывается через n8n (визуальные схемы процессов).</li>
+                <li>Новые интеграции и сценарии добавляются без полной перестройки.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--alt" id="segments">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Кому подходит</p>
+              <h2>Сегменты и задачи</h2>
+            </div>
+            <p class="lead">AI Bird работает и с небольшими командами, и с быстрорастущими компаниями.</p>
+          </div>
+          <div class="segment-grid" data-reveal>
+            <div class="card segment-card">
+              <h3>Малый бизнес</h3>
+              <ul>
+                <li>Салон красоты — запись на услуги, напоминания, ответы по услугам, акциям, адресам.</li>
+                <li>Фитнес-студия — онбординг клиентов, расписание, заморозка абонементов, уведомления о тренировках.</li>
+                <li>Небольшая онлайн-школа — тестирование уровня, подбор программы, напоминания об оплате.</li>
+              </ul>
+            </div>
+            <div class="card segment-card">
+              <h3>Средний бизнес</h3>
+              <ul>
+                <li>Интернет-магазин — статус заказа, подбор товара, рекомендации, допродажи.</li>
+                <li>Образовательный центр — обработка заявок, ответы на вопросы, рассылка напоминаний.</li>
+                <li>Логистическая компания — статус доставки, приём заявок, ответы по тарифам и срокам.</li>
+              </ul>
+            </div>
+            <div class="card segment-card">
+              <h3>Стартапы</h3>
+              <ul>
+                <li>Быстрая сборка сценариев общения с клиентами.</li>
+                <li>Тестирование гипотез без найма большой команды операторов.</li>
+                <li>Автоматическое логирование лидов и фидбэка в CRM.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card" data-reveal style="margin-top: 24px">
+            <h3>Типичные роли</h3>
+            <ul class="checklist">
+              <li>Собственник / генеральный директор.</li>
+              <li>Директор по маркетингу / продажам.</li>
+              <li>IT-директор или техруководитель (для согласования интеграций).</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="cases">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Кейсы</p>
+              <h2>Примеры внедрений</h2>
+            </div>
+            <p class="lead">Синтетические, но реалистичные кейсы с цифрами и результатами.</p>
+          </div>
+          <div class="case-grid" data-reveal>
+            <article class="card case-card">
+              <span class="case-tag">Салон красоты</span>
+              <h3>Запись и вопросы по услугам</h3>
+              <p>
+                Администратор не успевал отвечать на ночные заявки. AI Bird подключили к сайту и
+                Telegram, обучили по прайсу и правилам записи.
+              </p>
+              <p><strong>Результат:</strong> −70% нагрузки на администратора, ответы за 20–40 секунд.</p>
+              <div class="case-meta">
+                <span class="case-tag">−70% нагрузка</span>
+                <span class="case-tag">24/7 запись</span>
+              </div>
+            </article>
+            <article class="card case-card">
+              <span class="case-tag">Фитнес-студия</span>
+              <h3>Онбординг и напоминания</h3>
+              <p>
+                Новые клиенты терялись после пробного занятия. AI Bird взял онбординг, напоминания и
+                заморозку абонементов, интеграция с CRM.
+              </p>
+              <p><strong>Результат:</strong> +15% удержания, +25% посещаемости групп.</p>
+              <div class="case-meta">
+                <span class="case-tag">+15% retention</span>
+                <span class="case-tag">CRM интеграция</span>
+              </div>
+            </article>
+            <article class="card case-card">
+              <span class="case-tag">Школа языков</span>
+              <h3>Квалификация лидов и прогрев</h3>
+              <p>
+                Лиды приходили из разных каналов и терялись. Ассистент тестирует уровень, подбирает
+                программу и отправляет данные в CRM.
+              </p>
+              <p><strong>Результат:</strong> +22% конверсии в оплату, −60% ручной работы.</p>
+              <div class="case-meta">
+                <span class="case-tag">+22% конверсия</span>
+                <span class="case-tag">−60% рутины</span>
+              </div>
+            </article>
+            <article class="card case-card">
+              <span class="case-tag">E-commerce</span>
+              <h3>Поддержка заказов и рекомендации</h3>
+              <p>
+                Клиенты спрашивали о статусах и товарах. AI Bird подключили к базе заказов, CRM и
+                каталогу, добавили сценарии допродаж.
+              </p>
+              <p><strong>Результат:</strong> −55% нагрузки на поддержку, +12% к среднему чеку.</p>
+              <div class="case-meta">
+                <span class="case-tag">−55% нагрузка</span>
+                <span class="case-tag">+12% чек</span>
+              </div>
+            </article>
+          </div>
+          <div style="margin-top: 24px">
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--alt" id="process">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Как мы работаем</p>
+              <h2>Прозрачный процесс внедрения</h2>
+            </div>
+            <p class="lead">Пять шагов, чтобы система заработала стабильно и предсказуемо.</p>
+          </div>
+          <ol class="timeline" data-reveal>
+            <li class="timeline-item">
+              <div class="timeline-number">1</div>
+              <div>
+                <h3>Аудит и постановка задачи</h3>
+                <p>Разбираем процессы продаж и поддержки, выбираем точки максимального эффекта.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-number">2</div>
+              <div>
+                <h3>Проектирование сценариев в n8n</h3>
+                <p>Строим схемы, условия и интеграции, согласуем логику с заказчиком.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-number">3</div>
+              <div>
+                <h3>Обучение AI</h3>
+                <p>Загружаем документы и базу знаний, настраиваем контекст и регламенты общения.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-number">4</div>
+              <div>
+                <h3>Интеграция</h3>
+                <p>Подключаем Telegram, сайт, формы и CRM (amo/Bitrix/HubSpot), настраиваем вебхуки.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-number">5</div>
+              <div>
+                <h3>Запуск и сопровождение</h3>
+                <p>Тестовый период, A/B-тесты, корректировки сценариев и регулярное дообучение.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="tech">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Технологии</p>
+              <h2>Стек AI Bird</h2>
+            </div>
+            <p class="lead">Простыми словами о том, что стоит внутри.</p>
+          </div>
+          <div class="tech-grid" data-reveal>
+            <div class="tech-card">
+              <h3>n8n</h3>
+              <p>Визуальный конструктор автоматизаций и бизнес-процессов.</p>
+            </div>
+            <div class="tech-card">
+              <h3>GPT или совместимая LLM</h3>
+              <p>“Мозг” ассистента, который понимает текст и контекст.</p>
+            </div>
+            <div class="tech-card">
+              <h3>CRM (amoCRM, Bitrix24, HubSpot)</h3>
+              <p>Место, где живут лиды, клиенты и сделки. Сюда попадают все данные.</p>
+            </div>
+            <div class="tech-card">
+              <h3>Промежуточный бэкэнд</h3>
+              <p>Python, базы данных, Docker и всё, что связывает систему в единое целое.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--alt" id="formats">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Форматы сотрудничества</p>
+              <h2>Выберите удобный формат</h2>
+            </div>
+            <p class="lead">Начинаем с малого и масштабируем по мере результата.</p>
+          </div>
+          <div class="format-grid" data-reveal>
+            <div class="format-card">
+              <h3>Бесплатный аудит и концепция</h3>
+              <p>Разбор процессов, поиск точек автоматизации, схема и концепция внедрения.</p>
+            </div>
+            <div class="format-card">
+              <h3>Пилотный проект</h3>
+              <p>Ограниченное число сценариев и каналов, чтобы проверить гипотезы и эффект.</p>
+            </div>
+            <div class="format-card">
+              <h3>Внедрение под ключ</h3>
+              <p>Полноценное покрытие процессов продаж и поддержки с интеграциями.</p>
+            </div>
+            <div class="format-card">
+              <h3>Поддержка и развитие по подписке</h3>
+              <p>Регулярное дообучение AI, добавление новых сценариев и интеграций.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">FAQ</p>
+              <h2>Частые вопросы</h2>
+            </div>
+            <p class="lead">Снимаем ключевые страхи и возражения.</p>
+          </div>
+          <div class="faq" data-reveal>
+            <details>
+              <summary>Чем AI Bird отличается от обычного чат-бота на конструкторе?</summary>
+              <p>
+                AI Bird понимает естественный язык, работает на LLM, обучается на ваших данных и
+                легко расширяется через n8n. Обычные боты ограничены жёсткими сценариями.
+              </p>
+            </details>
+            <details>
+              <summary>Где хранятся данные и кто имеет к ним доступ?</summary>
+              <p>
+                Доступен self-hosted режим: все переписки, базы и CRM остаются на серверах клиента.
+                Доступ имеет только ваша команда.
+              </p>
+            </details>
+            <details>
+              <summary>Что нужно от клиента для старта?</summary>
+              <p>
+                Нужны доступы к каналам общения и CRM, материалы для обучения ассистента и описание
+                текущих процессов.
+              </p>
+            </details>
+            <details>
+              <summary>Сколько времени занимает запуск пилота и полноценного решения?</summary>
+              <p>
+                Пилот обычно запускается за 2–4 недели в зависимости от количества сценариев и
+                интеграций. Полное внедрение планируется поэтапно.
+              </p>
+            </details>
+            <details>
+              <summary>Можно ли начать с маленького пилота без серьёзных вложений?</summary>
+              <p>
+                Да, пилот ограничивается ключевыми сценариями и каналами, чтобы быстро проверить
+                эффект и масштабироваться дальше.
+              </p>
+            </details>
+            <details>
+              <summary>Что, если у нас уже есть CRM и какие-то боты?</summary>
+              <p>
+                Мы подключаем AI Bird поверх текущей инфраструктуры, используем существующие данные
+                и постепенно заменяем или дополняем старые сценарии.
+              </p>
+            </details>
+            <details>
+              <summary>Нужен ли свой сервер для self-hosted и какой примерно?</summary>
+              <p>
+                Да, для self-hosted нужен сервер. Конфигурация зависит от объёма диалогов и каналов,
+                мы помогаем подобрать оптимальный вариант.
+              </p>
+            </details>
+            <details>
+              <summary>Как считается стоимость?</summary>
+              <p>
+                Модель включает разовое внедрение и дальнейшую поддержку по подписке. Стоимость
+                зависит от числа каналов, сценариев и нагрузки.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--accent" id="contact">
+        <div class="container contact-grid">
+          <div data-reveal>
+            <p class="eyebrow">Контакты и старт</p>
+            <h2>Получите аудит или пилот за 2–4 недели</h2>
+            <p class="lead">
+              Оставьте заявку, и мы разберём ваш процесс, предложим сценарии и покажем ожидаемый
+              эффект. Можно начать с небольшого пилота.
+            </p>
+            <div class="cta-group" style="margin: 24px 0">
+              <a class="btn btn-primary" href="#contact">Запросить аудит</a>
+              <a
+                class="btn btn-ghost"
+                href="https://t.me/dudorovdenis"
+                data-telegram
+                target="_blank"
+                rel="noopener"
+              >
+                Написать в Telegram
+              </a>
+            </div>
+          </div>
+          <form
+            class="contact-card"
+            data-lead
+            data-form-name="main_lead"
+            data-endpoint="/api/lead"
+            method="post"
+            action="/api/lead"
+          >
+            <div class="form-field">
+              <label for="name">Имя</label>
+              <input id="name" name="name" type="text" placeholder="Как к вам обращаться" required />
+            </div>
+            <div class="form-field">
+              <label for="contact">Контакт (Telegram, телефон или email)</label>
+              <input
+                id="contact"
+                name="contact"
+                type="text"
+                placeholder="@telegram / +7 / email"
+                required
+              />
+            </div>
+            <div class="form-field">
+              <label for="comment">Комментарий</label>
+              <textarea id="comment" name="comment" placeholder="Коротко опишите задачу"></textarea>
+            </div>
+            <input class="honeypot" type="text" name="company" tabindex="-1" autocomplete="off" />
+            <input type="hidden" name="utm_source" data-utm="utm_source" />
+            <input type="hidden" name="utm_medium" data-utm="utm_medium" />
+            <input type="hidden" name="utm_campaign" data-utm="utm_campaign" />
+            <input type="hidden" name="utm_term" data-utm="utm_term" />
+            <input type="hidden" name="utm_content" data-utm="utm_content" />
+            <input type="hidden" name="utm_id" data-utm="utm_id" />
+            <input type="hidden" name="gclid" data-utm="gclid" />
+            <input type="hidden" name="yclid" data-utm="yclid" />
+            <input type="hidden" name="referrer" data-utm="referrer" />
+            <input type="hidden" name="landing_page" data-utm="landing_page" />
+            <input type="hidden" name="source" value="website" />
+            <button class="btn btn-primary" type="submit">Отправить заявку</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+            <small>
+              Нажимая «Отправить заявку», вы соглашаетесь с
+              <a href="consent.html">согласием на обработку персональных данных</a>.
+            </small>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="logo" href="index.html">
+            <span class="logo-mark" aria-hidden="true">
+              <img src="logo.png" alt="" width="26" height="26" />
+            </span>
+            <span class="logo-text">AI Bird</span>
+          </a>
+          <p class="lead">AI-автоматизация для бизнеса на базе n8n + GPT.</p>
+          <small>Работаем с B2B-сегментом, фокус на прозрачной автоматизации.</small>
+        </div>
+        <div>
+          <h3>Разделы</h3>
+          <ul>
+            <li><a href="#solution">Решение</a></li>
+            <li><a href="#cases">Кейсы</a></li>
+            <li><a href="#process">Как работаем</a></li>
+            <li><a href="#contact">Контакты</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Страницы</h3>
+          <ul>
+            <li><a href="cases.html">Кейсы</a></li>
+            <li><a href="about.html">О проекте</a></li>
+            <li><a href="blog.html">Материалы</a></li>
+            <li><a href="privacy.html">Политика конфиденциальности</a></li>
+            <li><a href="consent.html">Согласие на обработку данных</a></li>
+            <li><a href="offer.html">Пользовательское соглашение</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Юридические данные</h3>
+          <ul>
+            <li>
+              Telegram:
+              <a href="https://t.me/dudorovdenis" target="_blank" rel="noopener">@dudorovdenis</a>
+            </li>
+            <li>
+              Телефон:
+              <a href="tel:+79080593362">+79080593362</a>
+            </li>
+            <li>ИП Дудоров Денис Максимович</li>
+            <li>ИНН: 745307164972</li>
+            <li>ОГРНИП: 325745600183999</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <script src="script.js" defer></script>
+  </body>
+</html>
