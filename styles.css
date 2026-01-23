@@ -279,7 +279,7 @@ ul {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-grid);
-  padding: clamp(12px, 2vw, 16px) 0;
+  padding: clamp(3px, 0.6vw, 4px) 0;
 }
 
 .logo {
