@@ -557,7 +557,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  if (req.method === 'GET') {
+  if (req.method === 'GET' || req.method === 'HEAD') {
     serveFile(req, res);
     return;
   }

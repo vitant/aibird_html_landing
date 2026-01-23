@@ -290,20 +290,19 @@ ul {
 }
 
 .logo-mark {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
-  background: linear-gradient(140deg, rgba(47, 245, 199, 0.2), rgba(59, 124, 255, 0.2));
-  border: 1px solid rgba(47, 245, 199, 0.35);
-  box-shadow: 0 0 18px rgba(47, 245, 199, 0.2);
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 
 .logo-mark svg,
 .logo-mark img {
-  width: 26px;
-  height: 26px;
+  width: 40px;
+  height: 40px;
   stroke: var(--accent);
   stroke-linecap: round;
   stroke-linejoin: round;

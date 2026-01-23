@@ -52,7 +52,7 @@ node server.js
 4. Откройте сайт:
 
 ```
-http://localhost:8000
+https://aibird.ru
 ```
 
 ## Переменные окружения
