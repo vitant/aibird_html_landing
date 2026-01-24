@@ -27,6 +27,53 @@
   const nav = document.querySelector('[data-nav]');
 
   if (navToggle && header && nav) {
+    const countNavRows = (navEl) => {
+      const rows = new Set();
+      Array.from(navEl.children).forEach((child) => {
+        if (!child.offsetParent) return;
+        rows.add(child.offsetTop);
+      });
+      return rows.size;
+    };
+
+    const updateNavCollapse = () => {
+      const wasOpen = header.getAttribute('data-nav-open') === 'true';
+      header.setAttribute('data-nav-collapse', 'false');
+
+      const prevStyles = {
+        display: nav.style.display,
+        visibility: nav.style.visibility,
+        position: nav.style.position,
+        width: nav.style.width,
+        pointerEvents: nav.style.pointerEvents
+      };
+
+      nav.style.visibility = 'hidden';
+      nav.style.display = 'flex';
+      nav.style.position = 'static';
+      nav.style.width = '';
+      nav.style.pointerEvents = 'none';
+
+      const rows = countNavRows(nav);
+
+      nav.style.display = prevStyles.display;
+      nav.style.visibility = prevStyles.visibility;
+      nav.style.position = prevStyles.position;
+      nav.style.width = prevStyles.width;
+      nav.style.pointerEvents = prevStyles.pointerEvents;
+
+      const shouldCollapse = rows > 2;
+      header.setAttribute('data-nav-collapse', shouldCollapse ? 'true' : 'false');
+
+      if (!shouldCollapse) {
+        header.setAttribute('data-nav-open', 'false');
+        navToggle.setAttribute('aria-expanded', 'false');
+      } else if (wasOpen) {
+        header.setAttribute('data-nav-open', 'true');
+        navToggle.setAttribute('aria-expanded', 'true');
+      }
+    };
+
     navToggle.addEventListener('click', () => {
       const isOpen = header.getAttribute('data-nav-open') === 'true';
       header.setAttribute('data-nav-open', String(!isOpen));
@@ -46,6 +93,19 @@
         navToggle.setAttribute('aria-expanded', 'false');
       }
     });
+
+    updateNavCollapse();
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+      if (resizeTimer) {
+        window.clearTimeout(resizeTimer);
+      }
+      resizeTimer = window.setTimeout(updateNavCollapse, 120);
+    });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(updateNavCollapse).catch(() => {});
+    }
   }
 
   const revealItems = document.querySelectorAll('[data-reveal]');

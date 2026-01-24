@@ -148,7 +148,12 @@
             aria-expanded="false"
             aria-controls="primary-nav"
           >
-            Меню
+            <span class="sr-only">Меню</span>
+            <span class="nav-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
           </button>
         </div>
       </div>
@@ -160,12 +165,12 @@
           <div class="hero-copy" data-reveal style="--delay: 0.05s">
             <p class="eyebrow">AI-автоматизация для B2B</p>
             <h1>
-              AI Bird — AI-автоматизация продаж и поддержки через ассистентов на базе n8n + GPT.
+              AI Bird — <span class="nowrap">AI-ассистенты</span> для продаж и поддержки.
             </h1>
             <p class="lead">
-              Продаем и внедряем AI-автоматизацию: self-hosted режим, обучение на данных вашей
-              компании и интеграции с CRM, сайтом, Telegram и другими каналами — без магии, только
-              системная автоматизация.
+              Подключаем к CRM, сайту и Telegram. Берём на себя рутину: ответы 24/7, квалификацию
+              лидов, запись/перенос, создание сделок и задач. При необходимости разворачиваем в
+              self-hosted режиме.
             </p>
             <div class="cta-group">
               <a class="btn btn-primary" href="#contact">Получить бесплатный аудит</a>
@@ -410,12 +415,20 @@
               </ul>
             </div>
           </div>
-          <div class="card" data-reveal style="margin-top: 24px">
-            <h3>Типичные роли</h3>
+          <div class="card role-card" data-reveal style="margin: 24px 0">
+            <h3>Кому это обычно нужно</h3>
             <ul class="checklist">
-              <li>Собственник / генеральный директор.</li>
-              <li>Директор по маркетингу / продажам.</li>
-              <li>IT-директор или техруководитель (для согласования интеграций).</li>
+              <li>Собственнику / CEO — чтобы не терять лиды, видеть цифры и снизить операционные затраты.</li>
+              <li>Head of Sales/Marketing — чтобы ускорить обработку, повысить конверсию и нормализовать качество лидов.</li>
+              <li>
+                Руководителю поддержки / Customer Success — чтобы разгрузить линию, дать 24/7 ответы и
+                поднять SLA/CSAT.
+              </li>
+              <li>
+                Операционному директору / Руководителю сервиса — чтобы стандартизировать процессы и
+                убрать ручную рутину.
+              </li>
+              <li>CTO / IT-директору — чтобы интеграции, безопасность и self-hosted были под контролем.</li>
             </ul>
           </div>
         </div>
@@ -428,7 +441,7 @@
               <p class="eyebrow">Кейсы</p>
               <h2>Примеры внедрений</h2>
             </div>
-            <p class="lead">Синтетические, но реалистичные кейсы с цифрами и результатами.</p>
+            <p class="lead">Реальные кейсы с цифрами и результатами.</p>
           </div>
           <div class="case-grid" data-reveal>
             <article class="card case-card">
