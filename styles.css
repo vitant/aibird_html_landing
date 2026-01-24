@@ -351,6 +351,7 @@ ul {
   border-radius: 999px;
   background: rgba(245, 247, 250, 0.06);
   border: 1px solid rgba(245, 247, 250, 0.08);
+  display: none;
 }
 
 .lang {
